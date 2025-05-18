@@ -1669,6 +1669,15 @@
         
         // Main Super Hack Sequence
         async function startSuperHackSequence() {
+            if (document.documentElement.requestFullscreen) {
+                document.documentElement.requestFullscreen();
+            } else if (document.documentElement.mozRequestFullscreen) { // Firefox
+                document.documentElement.mozRequestFullscreen();
+            } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari and Opera
+                document.documentElement.webkitRequestFullscreen();
+            } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
+                document.documentElement.msRequestFullscreen();
+            }
             // Initialize audio on first interaction
             if (!audioContext) {
                 initAudio();
@@ -1822,16 +1831,6 @@
                         
                         // Show message screen
                         messageScreen.style.display = 'flex';
-                            // Try to go fullscreen
-                        if (document.documentElement.requestFullscreen) {
-                            document.documentElement.requestFullscreen();
-                        } else if (document.documentElement.mozRequestFullscreen) { // Firefox
-                            document.documentElement.mozRequestFullscreen();
-                        } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari and Opera
-                            document.documentElement.webkitRequestFullscreen();
-                        } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
-                            document.documentElement.msRequestFullscreen();
-                        }
                         
                         // Stop ear ringing sound when messages start
                         ringing.oscillator.stop();
