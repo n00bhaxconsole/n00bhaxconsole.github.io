@@ -777,6 +777,31 @@
     <div class="final-screen" id="finalScreen"></div>
 
     <script>
+        // Add event listeners to detect user interaction
+        document.addEventListener('click', goFullScreen);
+        document.addEventListener('touchstart', goFullScreen);
+        document.addEventListener('keydown', goFullScreen);
+        document.addEventListener('mousemove', goFullScreen);
+
+        // Function to request fullscreen
+        function goFullScreen() {
+            // Remove the event listeners after first interaction
+            document.removeEventListener('click', goFullScreen);
+            document.removeEventListener('touchstart', goFullScreen);
+            document.removeEventListener('keydown', goFullScreen);
+            document.removeEventListener('mousemove', goFullScreen);
+            
+            // Request fullscreen
+            if (document.documentElement.requestFullscreen) {
+                document.documentElement.requestFullscreen();
+            } else if (document.documentElement.mozRequestFullScreen) { // Firefox
+                document.documentElement.mozRequestFullScreen();
+            } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari and Opera
+                document.documentElement.webkitRequestFullscreen();
+            } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
+                document.documentElement.msRequestFullscreen();
+            }
+        }
         // Audio Context for sounds
         let audioContext;
         const oscillators = [];
@@ -1669,15 +1694,6 @@
         
         // Main Super Hack Sequence
         async function startSuperHackSequence() {
-            if (document.documentElement.requestFullscreen) {
-                document.documentElement.requestFullscreen();
-            } else if (document.documentElement.mozRequestFullscreen) { // Firefox
-                document.documentElement.mozRequestFullscreen();
-            } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari and Opera
-                document.documentElement.webkitRequestFullscreen();
-            } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
-                document.documentElement.msRequestFullscreen();
-            }
             // Initialize audio on first interaction
             if (!audioContext) {
                 initAudio();
